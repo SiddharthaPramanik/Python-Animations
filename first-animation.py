@@ -1,3 +1,4 @@
+from curses.ascii import alt
 from math import dist
 from timeit import repeat
 from turtle import update
@@ -33,12 +34,15 @@ gs = gridspec.GridSpec(2, 2)
 ax0 = fig.add_subplot(gs[0, :], facecolor=(0.9, 0.9, 0.9))
 
 line, = ax0.plot([], [], 'b', linewidth=2)
+plane_1, = ax0.plot([], [], 'k', linewidth=10)
 
 # Define animation function
 def update_plot(num):
     line.set_data(distance[0:num], altitude[0:num])
-    
-    return line, 
+    plane_1.set_data([distance[num] - 200, distance[num] + 200], 
+                        [altitude[num] - 0.75, altitude[num] + 0.75])    
+
+    return line, plane_1
 
 # Animation
 ani = animation.FuncAnimation(fig, update_plot, frames=frame_amt, interval=20, repeat=True, blit=True)
